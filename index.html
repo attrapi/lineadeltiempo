@@ -1,42 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linea del Tiempo</title>
-    <style>
-  /* Cambia estos dos por tus colores institucionales */
-  :root {
-    --color-institucional: #003366;        /* principal */
-    --color-institucional-sec: #00a0b0;    /* secundario que combine */
-  }
+  <meta charset="utf-8" />
+  <title>Timeline personalizada</title>
 
-  /* Caja del contenido del marcador (texto del evento) */
-  .tl-timemarker-content-container,
-  .tl-timemarker-content-container-long,
-  .tl-timemarker-content-container-small {
-    background-color: var(--color-institucional);
-    color: #ffffff;              /* texto en blanco */
-    border-radius: 4px;
-    border: 1px solid rgba(0,0,0,0.1);
-  }
+  <!-- CSS oficial de TimelineJS -->
+  <link title="timeline-styles" rel="stylesheet"
+        href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
 
-  /* Marcador que tiene inicio y fin (la “barra” en la línea de tiempo) */
-  .tl-timemarker.tl-timemarker-with-end {
-    background-color: transparent; /* por si acaso */
-  }
+  <!-- Tus estilos personalizados -->
+  <style>
+    :root {
+      --color-institucional: #691C32;      /* vino principal */
+      --color-institucional-sec: #96606F;  /* derivado que combina */
+      --color-link: #96606F;               /* color de links en el texto */
+    }
 
-  /* Línea / barra del marcador con fin (según estructura típica de TimelineJS) */
-  .tl-timemarker.tl-timemarker-with-end .tl-timemarker-content-container,
-  .tl-timemarker.tl-timemarker-with-end .tl-timemarker-content-container-long,
-  .tl-timemarker.tl-timemarker-with-end .tl-timemarker-content-container-small {
-    background-color: var(--color-institucional-sec);
-  }
-</style>
+    /* CAJA DE LOS EVENTOS EN LA NAV (los cuadritos con el título) */
+    .tl-timemarker-content-container,
+    .tl-timemarker-content-container-long,
+    .tl-timemarker-content-container-small {
+      background-color: var(--color-institucional);
+      color: #ffffff;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.15);
+    }
 
+    /* EVENTOS QUE TIENEN RANGO (with-end) */
+    .tl-timemarker.tl-timemarker-with-end
+      .tl-timemarker-content-container,
+    .tl-timemarker.tl-timemarker-with-end
+      .tl-timemarker-content-container-long,
+    .tl-timemarker.tl-timemarker-with-end
+      .tl-timemarker-content-container-small {
+      background-color: var(--color-institucional-sec);
+    }
+
+    /* COLOR DE LAS URLS DENTRO DEL TEXTO DE LAS DIAPOSITIVAS */
+    .tl-slide .tl-text-content a {
+      color: var(--color-link);
+      text-decoration: none;
+      font-weight: 600;
+      border-bottom: 1px dashed var(--color-link);
+    }
+
+    .tl-slide .tl-text-content a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-    <iframe src='https://cdn.knightlab.com/libs/timeline3/latest/embed/index.html?source=v2%3A2PACX-1vTrhzy-gOn-UThOEccNA7-5ijY_ln-13xyFrHTlreZAJ0aGprAysbyfkzcWrr94FcZoDQTi3zowxELi&font=Default&lang=es&initial_zoom=2&width=100%25&height=650' width='100%' height='650' webkitallowfullscreen mozallowfullscreen allowfullscreen frameborder='0'></iframe>
-</body>
+  <!-- Aquí se dibuja la timeline -->
+  <div id="timeline-embed" style="width:100%; height:650px;"></div>
 
+  <!-- JS de TimelineJS -->
+  <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+  <script>
+    // 👇 Este es tu "source" sacado del iframe (ya decodificado)
+    var source = "v2:2PACX-1vTrhzy-gOn-UThOEccNA7-5ijY_ln-13xyFrHTlreZAJ0aGprAysbyfkzcWrr94FcZoDQTi3zowxELi";
+
+    window.timeline = new TL.Timeline("timeline-embed", source, {
+      language: "es",
+      initial_zoom: 2,
+      font: "Default"
+    });
+  </script>
+</body>
 </html>
