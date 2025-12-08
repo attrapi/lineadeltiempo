@@ -2,21 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Timeline personalizada</title>
+  <title>Timeline ARTF</title>
 
   <!-- CSS oficial de TimelineJS -->
   <link title="timeline-styles" rel="stylesheet"
         href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
 
-  <!-- Tus estilos personalizados -->
+  <!-- TUS ESTILOS PERSONALIZADOS -->
   <style>
     :root {
+      /* Colores institucionales que definimos */
       --color-institucional: #691C32;      /* vino principal */
       --color-institucional-sec: #96606F;  /* derivado que combina */
       --color-link: #96606F;               /* color de links en el texto */
     }
 
-    /* CAJA DE LOS EVENTOS EN LA NAV (los cuadritos con el título) */
+    /* ========= CUADROS DE EVENTOS (TIMENAV) ========= */
     .tl-timemarker-content-container,
     .tl-timemarker-content-container-long,
     .tl-timemarker-content-container-small {
@@ -36,7 +37,7 @@
       background-color: var(--color-institucional-sec);
     }
 
-    /* COLOR DE LAS URLS DENTRO DEL TEXTO DE LAS DIAPOSITIVAS */
+    /* ========= LINKS DENTRO DEL TEXTO DE LAS DIAPOSITIVAS ========= */
     .tl-slide .tl-text-content a {
       color: var(--color-link);
       text-decoration: none;
@@ -47,6 +48,36 @@
     .tl-slide .tl-text-content a:hover {
       text-decoration: underline;
     }
+
+    /* ========= DETAILS / SUMMARY (LISTAS DESPLEGABLES) ========= */
+
+    /* Margen entre cada bloque desplegable */
+    .tl-slide .tl-text-content details {
+      margin: 0.4em 0 0.6em 0;
+    }
+
+    /* Estilo del "botón" (summary) que se puede abrir/cerrar */
+    .tl-slide .tl-text-content summary {
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+      padding: 0.25em 0.6em;
+      border-radius: 4px;
+      display: inline-block;
+      background: var(--color-institucional-sec);
+      color: #ffffff;
+    }
+
+    /* Quitar el triangulito default de algunos navegadores (opcional) */
+    .tl-slide .tl-text-content summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Listas internas un poquito sangradas */
+    .tl-slide .tl-text-content details ul {
+      margin: 0.3em 0 0 1.2em;
+      padding-left: 0;
+    }
   </style>
 </head>
 <body>
@@ -56,9 +87,10 @@
   <!-- JS de TimelineJS -->
   <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
   <script>
-    // 👇 Este es tu "source" sacado del iframe (ya decodificado)
+    // Este es tu "source" sacado del iframe (ya decodificado)
     var source = "v2:2PACX-1vTrhzy-gOn-UThOEccNA7-5ijY_ln-13xyFrHTlreZAJ0aGprAysbyfkzcWrr94FcZoDQTi3zowxELi";
 
+    // Crear timeline en el div "timeline-embed"
     window.timeline = new TL.Timeline("timeline-embed", source, {
       language: "es",
       initial_zoom: 2,
