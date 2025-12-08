@@ -11,10 +11,10 @@
   <!-- TUS ESTILOS PERSONALIZADOS -->
   <style>
     :root {
-      /* Colores institucionales */
-      --color-institucional: #691C32;      /* vino principal */
-      --color-institucional-sec: #96606F;  /* derivado que combina */
-      --color-link: #96606F;               /* color de links en el texto */
+      /* Colores institucionales EXACTOS */
+      --color-institucional: #691c32;      /* vino principal */
+      --color-institucional-sec: #96606f;  /* derivado que combine */
+      --color-link: #96606f;               /* color de links en texto */
     }
 
     /* ========= CUADROS DE EVENTOS (TIMENAV) ========= */
@@ -49,59 +49,49 @@
       text-decoration: underline;
     }
 
-    /* ========= DETAILS / SUMMARY (LISTAS DESPLEGABLES) ========= */
+    /* ========= ACORDEONES (LISTAS DESPLEGABLES) ========= */
 
-    /* Margen entre cada bloque desplegable */
-    .tl-slide .tl-text-content details {
+    /* Contenedor general del acordeón */
+    .tl-slide .tl-text-content .accordion {
       margin: 0.4em 0 0.6em 0;
     }
 
-    /* Estilo del "botón" (summary) que se puede abrir/cerrar */
-    .tl-slide .tl-text-content summary {
+    /* Cabecera clicable (el "botón") */
+    .tl-slide .tl-text-content .accordion-summary {
       cursor: pointer;
       font-weight: 600;
-      list-style: none;
       padding: 0.25em 0.6em;
       border-radius: 4px;
       display: inline-block;
       background: var(--color-institucional-sec);
       color: #ffffff;
+      user-select: none;
     }
 
-    /* Quitar el triangulito default de algunos navegadores (opcional) */
-    .tl-slide .tl-text-content summary::-webkit-details-marker {
-      display: none;
-    }
-
-    /* Listas internas un poquito sangradas */
-    .tl-slide .tl-text-content details ul {
-      margin: 0.3em 0 0 1.2em;
-      padding-left: 0;
-    }
-
-    /* ====== ANIMACIÓN SUAVE PARA ABRIR/CERRAR ====== */
-
-    .tl-slide .tl-text-content details.accordion {
-      margin: 0.4em 0 0.6em 0;
-    }
-
-    /* Cajita que contiene la lista (se anima) */
-    .tl-slide .tl-text-content details.accordion .accordion-body {
+    /* Cuerpo con la lista que se abre/cierra */
+    .tl-slide .tl-text-content .accordion-body {
       max-height: 0;
       overflow: hidden;
       opacity: 0;
       transform: translateY(-4px);
       transition:
-        max-height 0.25s ease,
-        opacity 0.25s ease,
-        transform 0.25s ease;
+        max-height 0.35s ease,
+        opacity 0.35s ease,
+        transform 0.35s ease;
+      margin-top: 0.25em;
     }
 
-    /* Cuando el details está abierto */
-    .tl-slide .tl-text-content details.accordion[open] .accordion-body {
-      max-height: 500px; /* ajusta si necesitas más alto */
+    /* Cuando el acordeón está abierto */
+    .tl-slide .tl-text-content .accordion.is-open .accordion-body {
+      max-height: 500px; /* súbelo si llegas a tener listas muy largas */
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Listas internas un poquito sangradas */
+    .tl-slide .tl-text-content .accordion-body ul {
+      margin: 0.3em 0 0 1.2em;
+      padding-left: 0;
     }
   </style>
 </head>
@@ -112,7 +102,7 @@
   <!-- JS de TimelineJS -->
   <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
   <script>
-    // Este es tu "source" sacado del iframe (ya decodificado)
+    // Tu "source" sacado del iframe (ya decodificado)
     var source = "v2:2PACX-1vTrhzy-gOn-UThOEccNA7-5ijY_ln-13xyFrHTlreZAJ0aGprAysbyfkzcWrr94FcZoDQTi3zowxELi";
 
     // Crear timeline en el div "timeline-embed"
@@ -120,6 +110,23 @@
       language: "es",
       initial_zoom: 2,
       font: "Default"
+    });
+
+    // ========= LÓGICA DEL ACORDEÓN (TRANSICIÓN SUAVE) =========
+    // Usamos delegación de eventos para que funcione aunque TimelineJS reprocesa el DOM
+    document.addEventListener('click', function (e) {
+      const summary = e.target.closest('.accordion-summary');
+      if (!summary) return; // Si no hizo click en un summary, salir
+
+      // Si hizo click en un enlace dentro del summary, dejamos que el link trabaje normal
+      if (e.target.tagName === 'A') {
+        return;
+      }
+
+      const accordion = summary.closest('.accordion');
+      if (!accordion) return;
+
+      accordion.classList.toggle('is-open');
     });
   </script>
 </body>
