@@ -226,6 +226,17 @@
     rgba(255,255,255,0)
   );
 }
+html, body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#timeline-embed{
+  width: 100vw;
+  height: 100dvh; /* o 100vh */
+}
 
 
 
@@ -236,7 +247,8 @@
 </head>
 <body>
   <!-- Aquí se dibuja la timeline -->
-  <div id="timeline-embed" style="width:100%; height:650px;"></div>
+  <div id="timeline-embed"></div>
+
 
   <!-- JS de TimelineJS -->
   <script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
@@ -270,6 +282,7 @@
   </script>
 </body>
 </html>
+
 
 
 
